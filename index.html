@@ -3,13 +3,14 @@
     { 
       id: 1, categoria: 'acessorios', nome: "Capacete Infantil BTWIN", preco: "20,00", 
       desc: "Proteção e estilo para as primeiras pedaladas! Possui ventilação e estampa lúdica. Ideal para bikes e patinetes.", 
-      estado: 30, img:"https://i.ibb.co/7JmY6ZN1/IMG-20260128-151503.png" 
+      estado: 30, img: "https://i.ibb.co/7JmY6ZN1/IMG-20260128-151503.png" 
     },
     { 
       id: 2, categoria: 'brinquedos', nome: "Quadriciclo Comfort Plus", preco: "70,00", 
       desc: "Carrinho 2 em 1 com haste para os pais. Cores vibrantes e assento anatômico. Diversão garantida!", 
       estado: 50, img: "https://i.ibb.co/J0sJ4Sh/Photoroom-20260128-151839386.png" 
-    }, <!--  👈👈  vírgula que faltava aqui -->
+    },
+    /* vírgula acima estava correta — não use comentários HTML dentro de JS */
     { 
       id: 3, categoria: 'brinquedos', nome: "Hoverboard (Skate elétrico)", preco: "250,00", 
       desc: "Hoverboard NOVO - nunca usado. Transforme o passeio no parque em uma verdadeira aventura! Diversão garantida!", 
@@ -18,7 +19,7 @@
   ];
 
   function consultarFrete() {
-    const cep = document.getElementById('campo-cep').value.trim();
+    const cep = document.getElementById('campo-cep')?.value.trim() || '';
     if (cep.replace(/\D/g, '').length < 8) { 
       alert("Digite um CEP válido."); 
       return; 
@@ -29,21 +30,39 @@
 
   function renderizar(lista) {
     const vitrine = document.getElementById('vitrine');
+    if (!vitrine) return;
+
     vitrine.innerHTML = lista.map(p => {
-      const info = (v) => v >= 100 ? {c:'bg-estado-novo',l:'Novo'} : v >= 50 ? {c:'bg-estado-pouco',l:'Pouco uso'} : {c:'bg-estado-usado',l:'Usado'};
-      const s = info(p.estado);
+      const info = (v) => v >= 100 
+        ? { c: 'bg-estado-novo',  l: 'Novo' } 
+        : v >= 50 
+          ? { c: 'bg-estado-pouco', l: 'Pouco uso' } 
+          : { c: 'bg-estado-usado', l: 'Usado' };
+
+      const s = info(Number(p.estado) || 0);
+
       return `
         <div class="card-produto">
-          ${p.img}
-          <h3 class="text-lg font-bold text-slate-800 text-center">${p.nome}</h3>
-          <div class="my-3">
-            <div class="flex justify-between text-[10px] font-bold uppercase mb-1 text-slate-400"><span>Condição</span><span>${s.l}</span></div>
-            <div class="bar-container"><div class="bar-fill ${s.c}" style="width: ${p.estado}%"></div></div>
+          <img 
+            src="${p.img}" 
+            alt="${p.nome}" 
+            class="w-full h-48 md:h-56 object-cover rounded-[25px] mb-4"
+            onerror="this.src='https://via.placeholder.com/600x400?text=Aguardando+Foto'"
+        <span>Condição</span><span>${s.l}</span>
+            </div>
+            <div class="bar-container">
+              <div class="bar-fill ${s.c}" style="width: ${Math.max(0, Math.min(100, Number(p.estado) || 0))}%"></div>
+            </div>
           </div>
+
           <p class="text-slate-400 text-xs text-center mb-4 flex-1">${p.desc}</p>
+
           <div class="flex flex-col items-center">
-            <span class="text-2xl font-bold text-slate-800 mb-3 font-fredoka">R$ ${p.preco}</span>
-            https://wa.me/5541999207555?text=${encodeURIComponent(Eu quero ✨</a>
+            <span class="text-2xl font-bold text-slate-800 mb-3">R$ ${p.preco}</span>
+            <a
+              href="https://t=${encodeURIComponent(
+              Eu quero ✨
+            </a>
           </div>
         </div>`;
     }).join('');
@@ -51,9 +70,13 @@
 
   function filtrar(cat) {
     document.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('active-category'));
-    document.getElementById('btn-' + cat).classList.add('active-category');
+    const btn = document.getElementById('btn-' + cat);
+    if (btn) btn.classList.add('active-category');
     renderizar(cat === 'todos' ? produtos : produtos.filter(p => p.categoria === cat));
   }
 
-  renderizar(produtos);
+  // Render inicial (só depois do DOM pronto é ainda mais seguro)
+  document.addEventListener('DOMContentLoaded', () => {
+    renderizar(produtos);
+  });
 </script>
