@@ -2,15 +2,17 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
+  <!-- DIGITE esta linha manualmente se for copiar de outro lugar -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Novo de Novo Kids | Brechó Infantil Premium em Curitiba</title>
-  <meta name="google-site-verification" content="googlefb7414215c3b01e0" />
-  <meta name="description" content="O melhor brechó infantil de Curitiba. Roupas, brinquedos e acessórios seminovos selecionados com carinho." />
-  <meta name="keywords" content="brechó infantil curitiba, roupas de bebê usadas, brinquedos seminovos, desapego kids curitiba" />
+  <meta name="description" content="O melhor brechó infantil de Curitiba. Roupas, brinquedos e acessórios seminovos selecionados com carinho.">
+  <meta name="keywords" content="brechó infantil curitiba, roupas de bebê usadas, brinquedos seminovos, desapego kids curitiba">
 
-  <!-- Tailwind e fontes -->
-  <script src="https://cdn.tailwindcss
+  <!-- Tailwind -->
+  https://cdn.tailwindcss.com</script>
+
+  <!-- Fonte -->
   https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap
 
   <style>
@@ -49,29 +51,40 @@
     .hide-scroll::-webkit-scrollbar { display: none; }
     .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* ======= Ajuste da imagem (Opção B) ======= */
+    /* Opção B: imagem inteira, sem cortes, responsiva */
     .card-produto .foto-produto {
       display: block;
       width: 100%;
-      max-height: 240px;        /* altura máxima no mobile */
-      object-fit: contain;      /* mostra a imagem inteira */
-      background: #f8fafc;      /* fundo suave para as bordas */
+      max-height: 240px;        /* mobile */
+      object-fit: contain;
+      background: #f8fafc;
       border-radius: 25px;
     }
     @media (min-width: 768px) {
-      .card-produto .foto-produto { max-height: 280px; } /* tablets */
+      .card-produto .foto-produto { max-height: 280px; } /* tablet */
     }
     @media (min-width: 1024px) {
-      .card-produto .foto-produto { max-height: 300px; } /* desktops */
+      .card-produto .foto-produto { max-height: 300px; } /* desktop */
     }
   </style>
 </head>
 <body class="text-gray-700">
 
+  <!-- Diagnóstico visível no celular -->
+  <script>
+    window.onerror = function (msg, url, line, col, err) {
+      const box = document.createElement('div');
+      box.style.cssText = 'position:fixed;z-index:99999;left:0;right:0;bottom:0;background:#fee2e2;color:#b91c1c;padding:12px;font:14px system-ui, -apple-system, Segoe UI, Roboto;';
+      box.textContent = 'Erro JS: ' + msg + ' @ ' + (line||'?') + ':' + (col||'?');
+      document.body.appendChild(box);
+      console.error(msg, url, line, col, err);
+      return false;
+    };
+  </script>
+
   <div class="flex flex-col md:flex-row">
-    <!-- Sidebar -->
     <aside class="sidebar w-full md:w-80 p-4 md:p-8 flex flex-col items-center">
-      <img src="logo.png" alt="Novo de Novo Kids" class="w-32 md:w-60 mb-4 md:mb-v class="flex md:flex-col space-x-2 md:space-x-0 md:space-y-2 pb-2 md:pb-0">
+      <img src="logo.png" alt="Novo de Novo Kids" class="w-32 md:w-60 mb-     <nav class="flex md:flex-col space-x-2 md:space-x-0 md:space-y-2 pb-2 md:pb-0">
           <button onclick="filtrar('todos')" id="btn-todos" class="sidebar-item active-category">✨ Todos</button>
           <button onclick="filtrar('brinquedos')" id="btn-brinquedos" class="sidebar-item">🧸 Brinquedos</button>
           <button onclick="filtrar('roupas')" id="btn-roupas" class="sidebar-item">👕 Roupas</button>
@@ -82,12 +95,15 @@
       </div>
     </aside>
 
-    <!-- Conteúdo principal -->
     <main class="flex-1 p-2 md:p-12">
       <header class="header-pastel mb-8">
         <h1 class="text-3xl md:text-7xl font-extrabold mb-2 tracking-tighter uppercase">Novo de Novo</h1>
         <p class="text-lg md:text-3xl font-medium opacity-90 italic">Onde o carinho se renova ✨</p>
-        <a href="https://wa.me/5541999207555" target="_blank" class="mt-6 bg-white text-pink-500 px-6 py-3 rounded-fullculadora de entrega -->
+        https://wa.me/5541999207555
+          💌 WhatsApp: (41) 99920-7555
+        </a>
+      </header>
+
       <section class="max-w-4xl mx-auto px-2 mb-12">
         <div class="bg-white rounded-[30px] p-6 shadow-sm border-2 border-dashed border-pink-200 flex flex-col md:flex-row items-center justify-between">
           <div class="flex items-center mb-4 md:mb-0">
@@ -99,9 +115,7 @@
           </div>
           <div class="flex w-full md:w-auto gap-2">
             <input
-              type="text"
-              id="campo-cep"
-              placeholder="Seu CEP"
+              type="text" id="campo-cep" placeholder="Seu CEP"
               inputmode="numeric"
               class="bg-slate-50 border-2 border-slate-100 rounded-2xl px-4 py-2 w-full md:w-40 text-sm"
             />
@@ -112,14 +126,12 @@
         </div>
       </section>
 
-      <!-- Vitrine -->
       <div id="vitrine" class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-12 px-2"></div>
     </main>
   </div>
 
-  <!-- Script -->
   <script>
-    // Catálogo de produtos (vírgula corrigida entre o item 2 e 3)
+    // Dados
     const produtos = [
       { 
         id: 1, categoria: 'acessorios', nome: "Capacete Infantil BTWIN", preco: "20,00", 
@@ -138,6 +150,7 @@
       }
     ];
 
+    // Ações
     function consultarFrete() {
       const cepRaw = document.getElementById('campo-cep').value.trim();
       const cep = cepRaw.replace(/\D/g, '');
@@ -161,12 +174,12 @@
 
         return `
           <div class="card-produto">
-            <!-- Opção B: mostrar a imagem inteira, sem corte -->
+            <!-- Opção B: imagem inteira, sem cortes -->
             <img 
-              src="${p.img}" 
-              alt="${p.nome}" 
-              class="foto-produto mb-4"
-              onerror="this.src='https://via.placeholder.com/600x400?text=Aguardandold uppercase mb-1 text-slate-400">
+               <h3 class="text-lg font-bold text-slate-800 text-center">${p.nome}</h3>
+
+            <div class="my-3">
+              <div class="flex justify-between text-[10px] font-bold uppercase mb-1 text-slate-400">
                 <span>Condição</span><span>${s.l}</span>
               </div>
               <div class="bar-container">
@@ -178,10 +191,24 @@
 
             <div class="flex flex-col items-center">
               <span class="text-2xl font-bold text-slate-800 mb-3">R$ ${p.preco}</span>
-              <a 
-                href="https://wa.me/5541999207555?text=${encodeURIComponent('Quero garantir o item: ' + p.nome)}" 
-                target="_blank" 
-                class="btn-comprar"
-                rel="noopener).forEach(b => b.classList.remove('active-category'));
+              <atps://wa.me/5541999207555?text=${encodeURIComponent(Eu quero ✨</a>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filtrar(cat) {
+      document.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('active-category'));
       const btn = document.getElementById('btn-' + cat);
       if (btn) btn.classList.add('active-category');
+      renderizar(cat === 'todos' ? produtos : produtos.filter(p => p.categoria === cat));
+    }
+
+    // Render somente quando o DOM estiver pronto (evita branco no mobile)
+    document.addEventListener('DOMContentLoaded', () => {
+      renderizar(produtos);
+    });
+  </script>
+</body>
+</html>
