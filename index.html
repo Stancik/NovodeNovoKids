@@ -228,7 +228,7 @@
         const cepRaw=document.getElementById('campo-cep')?.value?.trim() || '';
         const cep=cepRaw.replace(/\D/g,'');
         if(cep.length<8){ alert("Digite um CEP válido."); return; }
-        const msg=encodeURIComponent(`Olá! Gostaria de consultar o frete para o CEP: ${cep}`);
+        const msg=encodeURIComponent('Olá! Gostaria de consultar o frete para o CEP: ${cep}`);
         window.open(`https://wa.me/5541999207555?text=${msg}`,'_blank');
       }
 
@@ -247,3 +247,4 @@
   </script>
 </body>
 </html>
+
