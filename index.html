@@ -2,6 +2,7 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
+  <!-- Digite esta linha manualmente para evitar caracteres invisíveis -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Novo de Novo Kids | Brechó Infantil Premium em Curitiba</title>
@@ -9,77 +10,127 @@
   <meta name="description" content="O melhor brechó infantil de Curitiba. Roupas, brinquedos e acessórios seminovos selecionados com carinho." />
   <meta name="keywords" content="brechó infantil curitiba, roupas de bebê usadas, brinquedos seminovos, desapego kids curitiba" />
 
-  <!-- Tailwind e fontes -->
-  https://cdn.tailwindcss.com</script>
-  https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap
-
+  <!-- ===== CSS AUTÔNOMO (sem Tailwind / sem Google Fonts) ===== -->
   <style>
-    body { 
-      font-family: 'Fredoka', sans-serif; 
-      background-color: #fdf2f8; 
-      background-image: radial-gradient(#fbcfe8 0.5px, transparent 0.5px), radial-gradient(#fbcfe8 0.5px, #fdf2f8 0.5px);
-      background-size: 20px 20px;
+    :root{
+      --pink-400:#f472b6; --pink-200:#fbcfe8;
+      --slate-50:#f8fafc; --slate-100:#f1f5f9; --slate-400:#94a3b8; --slate-700:#334155;
+      --estado-novo:#86efac; --estado-pouco:#fef08a; --estado-usado:#fdba74;
     }
-    .sidebar { background-color: #e2f2f1; }
-    @media (min-width: 768px) { 
-      .sidebar { border-radius: 0 40px 40px 0; min-height: 100vh; position: sticky; top: 0; } 
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--slate-700);
+      font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+      background:#fdf2f8;
+      background-image:
+        radial-gradient(var(--pink-200) 0.5px, transparent 0.5px),
+        radial-gradient(var(--pink-200) 0.5px, #fdf2f8 0.5px);
+      background-size:20px 20px;
     }
-    .sidebar-item { 
-      transition: 0.3s; border-radius: 15px; display: flex; align-items: center; 
-      padding: 10px 15px; color: #64748b; white-space: nowrap; 
-    }
-    .active-category { background-color: #A8E6CF; color: white !important; font-weight: bold; }
-    .header-pastel {
-      background: linear-gradient(135deg, #A8E6CF 0%, #D1D1F7 50%, #FFD1DC 100%);
-      border-radius: 30px; padding: 40px 20px; margin: 10px; text-align: center; color: white; border: 6px solid white;
-    }
-    .bar-container { background: #f1f5f9; border-radius: 10px; height: 8px; width: 100%; overflow: hidden; }
-    .bar-fill { height: 100%; transition: width 1s ease-out; }
-    .bg-estado-novo { background-color: #86efac; }
-    .bg-estado-pouco { background-color: #fef08a; }
-    .bg-estado-usado { background-color: #fdba74; }
-    .card-produto { 
-      background: white; border-radius: 30px; padding: 20px; 
-      box-shadow: 0 10px 25px rgba(0,0,0,0.03); display: flex; flex-direction: column; 
-    }
-    .btn-comprar { 
-      background-color: #f472b6; color: white; padding: 12px; 
-      border-radius: 18px; font-weight: bold; text-align: center; width: 100%; 
-    }
-    .hide-scroll::-webkit-scrollbar { display: none; }
-    .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;height:auto;display:block}
 
-    /* ======= Ajuste da imagem (Opção B) ======= */
-    .card-produto .foto-produto {
-      display: block;
-      width: 100%;
-      max-height: 240px;        /* altura máxima no mobile */
-      object-fit: contain;      /* mostra a imagem inteira */
-      background: #f8fafc;      /* fundo suave para as bordas */
-      border-radius: 25px;
+    /* Utilitárias básicas */
+    .flex{display:flex}.flex-col{flex-direction:column}.items-center{align-items:center}
+    .w-full{width:100%}.flex-1{flex:1}
+    .p-2{padding:.5rem}.p-4{padding:1rem}.p-6{padding:1.5rem}
+    .px-2{padding-left:.5rem;padding-right:.5rem}
+    .mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-8{margin-bottom:2rem}.mb-12{margin-bottom:3rem}
+    .mt-6{margin-top:1.5rem}
+    .text-sm{font-size:.875rem}.text-lg{font-size:1.125rem}.text-2xl{font-size:1.5rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.italic{font-style:italic}
+    .shadow{box-shadow:0 2px 8px rgba(0,0,0,.06)} .shadow-lg{box-shadow:0 10px 25px rgba(0,0,0,.12)}
+    .rounded-full{border-radius:9999px}
+    .grid{display:grid}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.gap-6{gap:1.5rem}
+    .max-w-4xl{max-width:56rem}.max-w-6xl{max-width:72rem}.mx-auto{margin-left:auto;margin-right:auto}
+
+    /* Breakpoints */
+    @media (min-width:640px){ .sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))} }
+    @media (min-width:768px){
+      .md\:flex-row{flex-direction:row}
+      .md\:w-80{width:20rem}
+      .md\:p-8{padding:2rem}.md\:p-12{padding:3rem}.md\:mb-12{margin-bottom:3rem}
+      .md\:text-3xl{font-size:1.875rem}
+      .md\:gap-12{gap:3rem}
     }
-    @media (min-width: 768px) {
-      .card-produto .foto-produto { max-height: 280px; } /* tablets */
+    @media (min-width:1024px){ .lg\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))} }
+
+    /* Estilos do app */
+    .sidebar{background:#e2f2f1}
+    @media (min-width:768px){ .sidebar{border-radius:0 40px 40px 0;min-height:100vh;position:sticky;top:0} }
+    .sidebar nav{display:flex;gap:.5rem}
+    @media (min-width:768px){ .sidebar nav{flex-direction:column} }
+    .sidebar-item{
+      transition:.2s; border-radius:15px; display:flex; align-items:center;
+      padding:10px 15px; color:#64748b; white-space:nowrap; border:1px solid transparent;
+      background:transparent; cursor:pointer;
     }
-    @media (min-width: 1024px) {
-      .card-produto .foto-produto { max-height: 300px; } /* desktops */
+    .sidebar-item:hover{background:#cfeeea}
+    .active-category{background:#A8E6CF;color:#fff!important;font-weight:700}
+
+    .header-pastel{
+      background:linear-gradient(135deg,#A8E6CF 0%,#D1D1F7 50%,#FFD1DC 100%);
+      border-radius:30px; padding:40px 20px; margin:10px; text-align:center; color:#fff; border:6px solid #fff;
     }
+
+    .card-produto{
+      background:#fff;border-radius:30px;padding:20px;
+      box-shadow:0 10px 25px rgba(0,0,0,.05);display:flex;flex-direction:column;min-height:100%;
+    }
+    .btn-comprar{
+      background:var(--pink-400);color:#fff;padding:12px;border-radius:18px;
+      font-weight:700;text-align:center;width:100%;
+    }
+    .bar-container{background:var(--slate-100);border-radius:10px;height:8px;width:100%;overflow:hidden}
+    .bar-fill{height:100%;transition:width 1s ease-out}
+    .bg-estado-novo{background:var(--estado-novo)}
+    .bg-estado-pouco{background:var(--estado-pouco)}
+    .bg-estado-usado{background:var(--estado-usado)}
+
+    /* Imagem: mostrar inteira (Opção B) */
+    .foto-produto{
+      display:block;width:100%;max-height:240px;object-fit:contain;
+      background:var(--slate-50);border-radius:25px;
+    }
+    @media (min-width:768px){ .foto-produto{max-height:280px} }
+    @media (min-width:1024px){ .foto-produto{max-height:300px} }
+
+    /* CTA WhatsApp estilizada */
+    .cta-zap{
+      background:#fff;color:#ec4899;border-radius:9999px;
+      padding:.75rem 1.5rem; font-weight:700; box-shadow:0 10px 25px rgba(0,0,0,.12); display:inline-block;
+    }
+
+    /* Banner de erro (diagnóstico) */
+    #errbox{display:none;position:fixed;z-index:99999;left:0;right:0;bottom:0;background:#fee2e2;color:#b91c1c;padding:12px;font:14px system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;border-top:2px solid #ef4444;word-break:break-word}
   </style>
 </head>
 <body class="text-gray-700">
+
+  <!-- Diagnóstico: mostra qualquer erro JS -->
+  <div id="errbox"></div>
+  <script>
+    (function(){
+      const showErr=(t)=>{const b=document.getElementById('errbox');b.textContent='Erro JS: '+t;b.style.display='block'};
+      window.addEventListener('error',e=>showErr(e.message+' @ '+e.filename+':'+e.lineno+':'+e.colno));
+      window.addEventListener('unhandledrejection',e=>showErr('Promise: '+(e.reason&&e.reason.message?e.reason.message:e.reason)));
+      window.__showErr=showErr;
+    })();
+  </script>
 
   <div class="flex flex-col md:flex-row">
     <!-- Sidebar -->
     <aside class="sidebar w-full md:w-80 p-4 md:p-8 flex flex-col items-center">
       logo.png
-      <div class="w-full overflow-x-auto hide-scroll">
-        <nav class="flex md:flex-col space-x-2 md:space-x-0 md:space-y-2 pb-2 md:pb-0">
-          <button onclick="filtrar('todos')" id="btn-todos" class="sidebar-item active-category">✨ Todos</button>
-          <button onclick="filtrar('brinquedos')" id="btn-brinquedos" class="sidebar-item">🧸 Brinquedos</button>
-          <button onclick="filtrar('roupas')" id="btn-roupas" class="sidebar-item">👕 Roupas</button>
-          <button onclick="filtrar('moveis')" id="btn-moveis" class="sidebar-item">🛏️ Móveis</button>
-          <button onclick="filtrar('livros')" id="btn-livros" class="sidebar-item">📚 Livros</button>
-          <button onclick="filtrar('acessorios')" id="btn-acessorios" class="sidebar-item">🍼 Acessórios</button>
+      <div class="w-full">
+        <nav class="pb-2 md:pb-0">
+          <!-- Removi onclick: uso data-cat e delegação de eventos -->
+          <button data-cat="todos"        id="btn-todos"        class="sidebar-item active-category">✨ Todos</button>
+          <button data-cat="brinquedos"   id="btn-brinquedos"   class="sidebar-item">🧸 Brinquedos</button>
+          <button data-cat="roupas"       id="btn-roupas"       class="sidebar-item">👕 Roupas</button>
+          <button data-cat="moveis"       id="btn-moveis"       class="sidebar-item">🛏️ Móveis</button>
+          <button data-cat="livros"       id="btn-livros"       class="sidebar-item">📚 Livros</button>
+          <button data-cat="acessorios"   id="btn-acessorios"   class="sidebar-item">🍼 Acessórios</button>
         </nav>
       </div>
     </aside>
@@ -87,34 +138,25 @@
     <!-- Conteúdo principal -->
     <main class="flex-1 p-2 md:p-12">
       <header class="header-pastel mb-8">
-        <h1 class="text-3xl md:text-7xl font-extrabold mb-2 tracking-tighter uppercase">Novo de Novo</h1>
-        <p class="text-lg md:text-3xl font-medium opacity-90 italic">Onde o carinho se renova ✨</p>
-        https://wa.me/5541999207555
-          💌 WhatsApp: (41) 99920-7555
-        </a>
+        <h1 class="text-lg md:text-3xl font-bold mb-2" style="letter-spacing:-.02em;text-transform:uppercase">Novo de Novo</h1>
+        <p class="text-lg md:text-3xl font-medium italic" style="opacity:.9">Onde o carinho se renova ✨</p>
+        https://wa.me/5541999207555💌 WhatsApp: (41) 99920-7555</a>
       </header>
 
       <!-- Calculadora de entrega -->
       <section class="max-w-4xl mx-auto px-2 mb-12">
-        <div class="bg-white rounded-[30px] p-6 shadow-sm border-2 border-dashed border-pink-200 flex flex-col md:flex-row items-center justify-between">
-          <div class="flex items-center mb-4 md:mb-0">
-            <span class="text-4xl mr-4">🚚</span>
+        <div class="shadow" style="background:#fff;border-radius:30px;padding:24px;border:2px dashed #fbcfe8;display:flex;flex-direction:column;gap:12px">
+          <div class="flex items-center">
+            <span style="font-size:2rem;margin-right:1rem">🚚</span>
             <div>
               <h4 class="font-bold">Calcular Entrega</h4>
-              <p class="text-xs text-slate-500">Curitiba e Região</p>
+              <p class="text-sm" style="color:#64748b">Curitiba e Região</p>
             </div>
           </div>
-          <div class="flex w-full md:w-auto gap-2">
-            <input
-              type="text"
-              id="campo-cep"
-              placeholder="Seu CEP"
-              inputmode="numeric"
-              class="bg-slate-50 border-2 border-slate-100 rounded-2xl px-4 py-2 w-full md:w-40 text-sm"
-            />
-            <button onclick="consultarFrete()" class="bg-pink-400 text-white px-6 py-2 rounded-2xl font-bold text-sm">
-              Consultar
-            </button>
+          <div class="flex w-full items-center" style="gap:.5rem">
+            <input type="text" id="campo-cep" placeholder="Seu CEP" inputmode="numeric"
+              style="flex:1;min-width:0;background:#f8fafc;border:2px solid #e2e8f0;border-radius:16px;padding:.5rem 1rem;font-size:.9rem" />
+            <button id="btn-consultar-frete" class="btn-comprar" style="width:auto;padding:.5rem 1rem;border-radius:16px">Consultar</button>
           </div>
         </div>
       </section>
@@ -124,83 +166,94 @@
     </main>
   </div>
 
-  <!-- Script -->
+  <!-- ===== Script ===== -->
   <script>
-    // Catálogo de produtos (vírgula corrigida entre o item 2 e 3)
-    const produtos = [
-      { 
-        id: 1, categoria: 'acessorios', nome: "Capacete Infantil BTWIN", preco: "20,00", 
-        desc: "Proteção e estilo para as primeiras pedaladas! Possui ventilação e estampa lúdica. Ideal para bikes e patinetes.", 
-        estado: 30, img:"https://i.ibb.co/7JmY6ZN1/IMG-20260128-151503.png" 
-      },
-      { 
-        id: 2, categoria: 'brinquedos', nome: "Quadriciclo Comfort Plus", preco: "70,00", 
-        desc: "Carrinho 2 em 1 com haste para os pais. Cores vibrantes e assento anatômico. Diversão garantida!", 
-        estado: 50, img: "https://i.ibb.co/J0sJ4Sh/Photoroom-20260128-151839386.png" 
-      },
-      { 
-        id: 3, categoria: 'brinquedos', nome: "Hoverboard (Skate elétrico)", preco: "250,00", 
-        desc: "Hoverboard NOVO - nunca usado. Transforme o passeio no parque em uma verdadeira aventura! Diversão garantida!", 
-        estado: 100, img: "https://i.ibb.co/4nbks21D/IMG-20260129-164829.jpg" 
-      }
-    ];
+    try{
+      // Catálogo
+      const produtos = [
+        { 
+          id:1, categoria:'acessorios', nome:"Capacete Infantil BTWIN", preco:"20,00",
+          desc:"Proteção e estilo para as primeiras pedaladas! Possui ventilação e estampa lúdica. Ideal para bikes e patinetes.",
+          estado:30, img:"https://i.ibb.co/7JmY6ZN1/IMG-20260128-151503.png"
+        },
+        { 
+          id:2, categoria:'brinquedos', nome:"Quadriciclo Comfort Plus", preco:"70,00",
+          desc:"Carrinho 2 em 1 com haste para os pais. Cores vibrantes e assento anatômico. Diversão garantida!",
+          estado:50, img:"https://i.ibb.co/J0sJ4Sh/Photoroom-20260128-151839386.png"
+        },
+        { 
+          id:3, categoria:'brinquedos', nome:"Hoverboard (Skate elétrico)", preco:"250,00",
+          desc:"Hoverboard NOVO - nunca usado. Transforme o passeio no parque em uma verdadeira aventura! Diversão garantida!",
+          estado:100, img:"https://i.ibb.co/4nbks21D/IMG-20260129-164829.jpg"
+        }
+      ];
 
-    function consultarFrete() {
-      const cepRaw = document.getElementById('campo-cep').value.trim();
-      const cep = cepRaw.replace(/\D/g, '');
-      if (cep.length < 8) { 
-        alert("Digite um CEP válido."); 
-        return; 
-      }
-      const msg = encodeURIComponent(`Olá! Gostaria de consultar o frete para o CEP: ${cep}`);
-      window.open(`https://wa.me/5541999207555?text=${msg}`, '_blank');
-    }
+      // Renderização dos cards
+      function renderizar(lista){
+        const vitrine=document.getElementById('vitrine');
+        vitrine.innerHTML = lista.map(p=>{
+          const info=v=> v>=100?{c:'bg-estado-novo',l:'Novo'}: v>=50?{c:'bg-estado-pouco',l:'Pouco uso'}:{c:'bg-estado-usado',l:'Usado'};
+          const s=info(p.estado);
+          return `
+            <div class="card-produto">
+              <img src="${p.img}" alt="${p.nome}" class="foto-produto mb-"text-align:center">${p.nome}</h3>
 
-    function renderizar(lista) {
-      const vitrine = document.getElementById('vitrine');
-      vitrine.innerHTML = lista.map(p => {
-        const info = (v) => v >= 100 
-          ? {c:'bg-estado-novo', l:'Novo'} 
-          : v >= 50 
-            ? {c:'bg-estado-pouco', l:'Pouco uso'} 
-            : {c:'bg-estado-usado', l:'Usado'};
-        const s = info(p.estado);
-
-        return `
-          <div class="card-produto">
-            <!-- Opção B: mostrar a imagem inteira, sem corte -->
-            ${p.img}
-            <h3 class="text-lg font-bold text-slate-800 text-center">${p.nome}</h3>
-
-            <div class="my-3">
-              <div class="flex justify-between text-[10px] font-bold uppercase mb-1 text-slate-400">
-                <span>Condição</span><span>${s.l}</span>
+              <div class="my-3">
+                <div style="display:flex;justify-content:space-between;font-size:10px;font-weight:700;text-transform:uppercase;margin:.25rem 0;color:#94a3b8">
+                  <span>Condição</span><span>${s.l}</span>
+                </div>
+                <div class="bar-container"><div class="bar-fill ${s.c}" style="width:${Math.max(0,Math.min(100,Number(p.estado)||0))}%"></div></div>
               </div>
-              <div class="bar-container">
-                <div class="bar-fill ${s.c}" style="width: ${Math.max(0, Math.min(100, Number(p.estado) || 0))}%"></div>
+
+              <p style="color:#94a3b8;font-size:.8rem;text-align:center;margin:.75rem 0;flex:1">${p.desc}</p>
+
+              <div class="flex flex-col items-center">
+                <span class="text-2xl font-bold mb-3">R$ ${p.preco}</span>
+                https://wa.me/5541999207555?text=${encodeURIComponent(Eu quero ✨</a>
               </div>
             </div>
+          `;
+        }).join('');
+      }
 
-            <p class="text-slate-400 text-xs text-center mb-4 flex-1">${p.desc}</p>
+      // Filtro por categoria
+      function filtrar(cat){
+        document.querySelectorAll('.sidebar-item').forEach(b=>b.classList.remove('active-category'));
+        const btn=document.getElementById('btn-'+cat); if(btn) btn.classList.add('active-category');
+        renderizar(cat==='todos'?produtos:produtos.filter(p=>p.categoria===cat));
+      }
 
-            <div class="flex flex-col items-center">
-              <span class="text-2xl font-bold text-slate-800 mb-3">R$ ${p.preco}</span>
-              https://wa.me/5541999207555?text=${encodeURIComponent(Eu quero ✨</a>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
+      // Consulta de frete (WhatsApp)
+      function consultarFrete(){
+        const cepRaw=document.getElementById('campo-cep').value.trim();
+        const cep=cepRaw.replace(/\D/g,'');
+        if(cep.length<8){ alert("Digite um CEP válido."); return; }
+        const msg=encodeURIComponent(`Olá! Gostaria de consultar o frete para o CEP: ${cep}`);
+        window.open(`https://wa.me/5541999207555?text=${msg}`,'_blank');
+      }
 
-    function filtrar(cat) {
-      document.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('active-category'));
-      const btn = document.getElementById('btn-' + cat);
-      if (btn) btn.classList.add('active-category');
-      renderizar(cat === 'todos' ? produtos : produtos.filter(p => p.categoria === cat));
-    }
+      // Delegação de eventos e render inicial
+      document.addEventListener('DOMContentLoaded',()=>{
+        try{
+          // Liga cliques dos botões de categoria (sem onclick inline)
+          const sidebarNav=document.querySelector('.sidebar nav');
+          if(sidebarNav){
+            sidebarNav.addEventListener('click',(ev)=>{
+              const btn=ev.target.closest('button[data-cat]');
+              if(!btn) return;
+              const cat=btn.getAttribute('data-cat');
+              filtrar(cat);
+            });
+          }
+          // Botão de frete
+          const btnFrete=document.getElementById('btn-consultar-frete');
+          if(btnFrete){ btnFrete.addEventListener('click', consultarFrete); }
 
-    // Render inicial
-    renderizar(produtos);
+          // Render inicial
+          renderizar(produtos);
+        }catch(e){ console.error(e); if(window.__showErr) window.__showErr(e.message); }
+      });
+    }catch(e){ console.error(e); if(window.__showErr) window.__showErr(e.message); }
   </script>
 </body>
 </html>
