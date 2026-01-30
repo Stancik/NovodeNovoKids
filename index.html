@@ -2,14 +2,14 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <!-- DIGITE esta linha manualmente se for copiar de outro lugar -->
+  <!-- Redigite esta linha manualmente (evita caracteres invisíveis) -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Novo de Novo Kids | Brechó Infantil Premium em Curitiba</title>
   <meta name="description" content="O melhor brechó infantil de Curitiba. Roupas, brinquedos e acessórios seminovos selecionados com carinho.">
   <meta name="keywords" content="brechó infantil curitiba, roupas de bebê usadas, brinquedos seminovos, desapego kids curitiba">
 
-  <!-- Tailwind -->
+  <!-- Tailwind (sem defer) -->
   https://cdn.tailwindcss.com</script>
 
   <!-- Fonte -->
@@ -66,25 +66,41 @@
     @media (min-width: 1024px) {
       .card-produto .foto-produto { max-height: 300px; } /* desktop */
     }
+
+    /* Banner de erro (inicialmente oculto) */
+    #errbox {
+      display: none;
+      position: fixed; z-index: 99999; left: 0; right: 0; bottom: 0;
+      background: #fee2e2; color: #b91c1c; padding: 12px;
+      font: 14px system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      border-top: 2px solid #ef4444;
+      word-break: break-word;
+    }
   </style>
 </head>
 <body class="text-gray-700">
 
-  <!-- Diagnóstico visível no celular -->
+  <!-- Diagnóstico visível no celular/desktop -->
+  <div id="errbox"></div>
   <script>
-    window.onerror = function (msg, url, line, col, err) {
-      const box = document.createElement('div');
-      box.style.cssText = 'position:fixed;z-index:99999;left:0;right:0;bottom:0;background:#fee2e2;color:#b91c1c;padding:12px;font:14px system-ui, -apple-system, Segoe UI, Roboto;';
-      box.textContent = 'Erro JS: ' + msg + ' @ ' + (line||'?') + ':' + (col||'?');
-      document.body.appendChild(box);
-      console.error(msg, url, line, col, err);
-      return false;
-    };
+    (function(){
+      const showErr = (txt) => {
+        try {
+          const box = document.getElementById('errbox');
+          box.textContent = 'Erro JS: ' + txt;
+          box.style.display = 'block';
+        } catch(e){}
+      };
+      window.addEventListener('error', (e) => showErr(e.message + ' @ ' + e.filename + ':' + e.lineno + ':' + e.colno));
+      window.addEventListener('unhandledrejection', (e) => showErr('Promise: ' + (e.reason && e.reason.message ? e.reason.message : e.reason)));
+      // Deixa acessível para outros scripts:
+      window.__showErr = showErr;
+    })();
   </script>
 
   <div class="flex flex-col md:flex-row">
     <aside class="sidebar w-full md:w-80 p-4 md:p-8 flex flex-col items-center">
-      <img src="logo.png" alt="Novo de Novo Kids" class="w-32 md:w-60 mb-     <nav class="flex md:flex-col space-x-2 md:space-x-0 md:space-y-2 pb-2 md:pb-0">
+      <img src="logo.png" alt="Novo de Novo Kids" class="w-32 md:w-60 mb-4 md <nav class="flex md:flex-col space-x-2 md:space-x-0 md:space-y-2 pb-2 md:pb-0">
           <button onclick="filtrar('todos')" id="btn-todos" class="sidebar-item active-category">✨ Todos</button>
           <button onclick="filtrar('brinquedos')" id="btn-brinquedos" class="sidebar-item">🧸 Brinquedos</button>
           <button onclick="filtrar('roupas')" id="btn-roupas" class="sidebar-item">👕 Roupas</button>
@@ -131,84 +147,97 @@
   </div>
 
   <script>
-    // Dados
-    const produtos = [
-      { 
-        id: 1, categoria: 'acessorios', nome: "Capacete Infantil BTWIN", preco: "20,00", 
-        desc: "Proteção e estilo para as primeiras pedaladas! Possui ventilação e estampa lúdica. Ideal para bikes e patinetes.", 
-        estado: 30, img:"https://i.ibb.co/7JmY6ZN1/IMG-20260128-151503.png" 
-      },
-      { 
-        id: 2, categoria: 'brinquedos', nome: "Quadriciclo Comfort Plus", preco: "70,00", 
-        desc: "Carrinho 2 em 1 com haste para os pais. Cores vibrantes e assento anatômico. Diversão garantida!", 
-        estado: 50, img: "https://i.ibb.co/J0sJ4Sh/Photoroom-20260128-151839386.png" 
-      },
-      { 
-        id: 3, categoria: 'brinquedos', nome: "Hoverboard (Skate elétrico)", preco: "250,00", 
-        desc: "Hoverboard NOVO - nunca usado. Transforme o passeio no parque em uma verdadeira aventura! Diversão garantida!", 
-        estado: 100, img: "https://i.ibb.co/4nbks21D/IMG-20260129-164829.jpg" 
+    try {
+      // === Dados (confira vírgulas!) ===
+      const produtos = [
+        { 
+          id: 1, categoria: 'acessorios', nome: "Capacete Infantil BTWIN", preco: "20,00", 
+          desc: "Proteção e estilo para as primeiras pedaladas! Possui ventilação e estampa lúdica. Ideal para bikes e patinetes.", 
+          estado: 30, img:"https://i.ibb.co/7JmY6ZN1/IMG-20260128-151503.png" 
+        },
+        { 
+          id: 2, categoria: 'brinquedos', nome: "Quadriciclo Comfort Plus", preco: "70,00", 
+          desc: "Carrinho 2 em 1 com haste para os pais. Cores vibrantes e assento anatômico. Diversão garantida!", 
+          estado: 50, img: "https://i.ibb.co/J0sJ4Sh/Photoroom-20260128-151839386.png" 
+        },
+        { 
+          id: 3, categoria: 'brinquedos', nome: "Hoverboard (Skate elétrico)", preco: "250,00", 
+          desc: "Hoverboard NOVO - nunca usado. Transforme o passeio no parque em uma verdadeira aventura! Diversão garantida!", 
+          estado: 100, img: "https://i.ibb.co/4nbks21D/IMG-20260129-164829.jpg" 
+        }
+      ];
+
+      // === Ações ===
+      function consultarFrete() {
+        const cepRaw = document.getElementById('campo-cep').value.trim();
+        const cep = cepRaw.replace(/\D/g, '');
+        if (cep.length < 8) { 
+          alert("Digite um CEP válido."); 
+          return; 
+        }
+        const msg = encodeURIComponent(`Olá! Gostaria de consultar o frete para o CEP: ${cep}`);
+        window.open(`https://wa.me/5541999207555?text=${msg}`, '_blank');
       }
-    ];
+      window.consultarFrete = consultarFrete;
 
-    // Ações
-    function consultarFrete() {
-      const cepRaw = document.getElementById('campo-cep').value.trim();
-      const cep = cepRaw.replace(/\D/g, '');
-      if (cep.length < 8) { 
-        alert("Digite um CEP válido."); 
-        return; 
-      }
-      const msg = encodeURIComponent(`Olá! Gostaria de consultar o frete para o CEP: ${cep}`);
-      window.open(`https://wa.me/5541999207555?text=${msg}`, '_blank');
-    }
+      function renderizar(lista) {
+        const vitrine = document.getElementById('vitrine');
+        vitrine.innerHTML = lista.map(p => {
+          const info = (v) => v >= 100 
+            ? {c:'bg-estado-novo', l:'Novo'} 
+            : v >= 50 
+              ? {c:'bg-estado-pouco', l:'Pouco uso'} 
+              : {c:'bg-estado-usado', l:'Usado'};
+          const s = info(p.estado);
 
-    function renderizar(lista) {
-      const vitrine = document.getElementById('vitrine');
-      vitrine.innerHTML = lista.map(p => {
-        const info = (v) => v >= 100 
-          ? {c:'bg-estado-novo', l:'Novo'} 
-          : v >= 50 
-            ? {c:'bg-estado-pouco', l:'Pouco uso'} 
-            : {c:'bg-estado-usado', l:'Usado'};
-        const s = info(p.estado);
-
-        return `
-          <div class="card-produto">
-            <!-- Opção B: imagem inteira, sem cortes -->
-            <img 
-               <h3 class="text-lg font-bold text-slate-800 text-center">${p.nome}</h3>
-
-            <div class="my-3">
-              <div class="flex justify-between text-[10px] font-bold uppercase mb-1 text-slate-400">
-                <span>Condição</span><span>${s.l}</span>
+          return `
+            <div class="card-produto">
+              <img 
+                src="${p.img}" 
+                alt="${p.nome}" 
+                class="foto-produto mb-4div class="my-3">
+                <div class="flex justify-between text-[10px] font-bold uppercase mb-1 text-slate-400">
+                  <span>Condição</span><span>${s.l}</span>
+                </div>
+                <div class="bar-container">
+                  <div class="bar-fill ${s.c}" style="width: ${Math.max(0, Math.min(100, Number(p.estado) || 0))}%"></div>
+                </div>
               </div>
-              <div class="bar-container">
-                <div class="bar-fill ${s.c}" style="width: ${Math.max(0, Math.min(100, Number(p.estado) || 0))}%"></div>
+
+              <p class="text-slate-400 text-xs text-center mb-4 flex-1">${p.desc}</p>
+
+              <div class="flex flex-col items-center">
+                <span class="text-2xl font-bold text-slate-800 mb-3">R$ ${p.preco}</span>
+                <a 
+                  href="https://ncodeURIComponent(Eu quero ✨</a>
               </div>
             </div>
+          `;
+        }).join('');
+      }
 
-            <p class="text-slate-400 text-xs text-center mb-4 flex-1">${p.desc}</p>
+      function filtrar(cat) {
+        document.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('active-category'));
+        const btn = document.getElementById('btn-' + cat);
+        if (btn) btn.classList.add('active-category');
+        renderizar(cat === 'todos' ? produtos : produtos.filter(p => p.categoria === cat));
+      }
+      window.filtrar = filtrar;
 
-            <div class="flex flex-col items-center">
-              <span class="text-2xl font-bold text-slate-800 mb-3">R$ ${p.preco}</span>
-              <atps://wa.me/5541999207555?text=${encodeURIComponent(Eu quero ✨</a>
-            </div>
-          </div>
-        `;
-      }).join('');
+      // Só roda depois do DOM pronto
+      document.addEventListener('DOMContentLoaded', () => {
+        try {
+          renderizar(produtos);
+        } catch (e) {
+          console.error(e);
+          if (window.__showErr) window.__showErr(e.message);
+        }
+      });
+    } catch (e) {
+      console.error(e);
+      if (window.__showErr) window.__showErr(e.message);
     }
-
-    function filtrar(cat) {
-      document.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('active-category'));
-      const btn = document.getElementById('btn-' + cat);
-      if (btn) btn.classList.add('active-category');
-      renderizar(cat === 'todos' ? produtos : produtos.filter(p => p.categoria === cat));
-    }
-
-    // Render somente quando o DOM estiver pronto (evita branco no mobile)
-    document.addEventListener('DOMContentLoaded', () => {
-      renderizar(produtos);
-    });
   </script>
 </body>
 </html>
+``
